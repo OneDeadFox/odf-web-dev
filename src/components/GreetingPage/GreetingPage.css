@@ -1,0 +1,29 @@
+.greetingPage {
+    color: var(--dark-text-color);
+    width: 86.5vw;
+    max-width: 100%;
+    height: 100vh;
+    max-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.tagEmbellishment {
+    position: absolute;
+    display: none;
+}
+
+.greetingHeader {
+    font-size: 2.5em;
+    position: absolute;
+    top: 120px ;
+    left: calc(var(--nav-width) + 2vw);
+}
+
+.greetingBody {
+    font-size: 2em;
+    position: absolute;
+    top: 165px;
+    left: calc(var(--nav-width) + 2vw);
+    display: none;
+}

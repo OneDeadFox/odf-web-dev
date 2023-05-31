@@ -1,0 +1,57 @@
+.navbarDark {
+    background-color: var(--dark-base-color);
+    color: var(--dark-text-color);
+    width: 13.5vw;
+    min-width: var(--nav-width);
+    min-height: 100vh;
+    max-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.logoBox {
+    color: var(--dark-text-color);
+    display: flex;
+    font-size: 24px;
+    text-decoration: none;
+}
+
+.description {
+    color: var(--dark-highlight-color);
+    text-align: center;
+}
+
+.navbarTitle {
+    text-orientation: upright;
+    writing-mode: vertical-lr;
+    margin-top: 5px;
+    margin-left: 5px;
+    margin-right: -3px;
+}
+
+.foxHeadLogo {
+    max-height: 120px;
+    margin-top: 10px;
+}
+
+.navLinks {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 80%;
+}
+
+.contactLogos {
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-around;
+}
+
+.cLogo {
+    max-height: 30px;
+}
+
+.implosion {
+    font-size: 2em;
+    position: absolute;
+}
