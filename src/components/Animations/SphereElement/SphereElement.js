@@ -10,14 +10,15 @@ export default function SphereElement(props) {
     let paraMaxY = 0;
     let paraMidX = 0;
     let paraMidY = 0;
+    let increment = 1;
     const animationPairedPoints = [];
-    const sphereDiameter = 2000;
+    const sphereDiameter = window.innerWidth*.6;
     const greetingStr = "Here is some filler text so I will move on to other things. Here is some filler text so I will move on to other things. Here is some filler text so I will move on to other things. Here is some filler text so I will move on to other things. Here is some filler text so I will move on to other things. Here is some filler text so I will move on to other things. "
     const lettersArray = greetingStr.split("");    
 
 
-    const animationDirection = (num) => {
-        const increment = num;
+    const handleWheel = (e) => {
+        const scrollDirection = (e) ? e.deltaY : false;
         const scrollTotal = 20;
     //animation variables
         //number of complete rotations
@@ -25,18 +26,40 @@ export default function SphereElement(props) {
         //number of wheel turns to reach destination
         let position = 1;
         //maximum scale in px
-        let size = window.innerWidth;
+        let size = sphereDiameter;
         //maximum size of font
         let lFont = 0;
         let sFont = 0;
         //maximum opacity
         let opacity = 0;
-        rot += increment/scrollTotal*6
-        position -= increment/scrollTotal;
-        lFont += scrollTotal/increment-1;
-        sFont += increment/scrollTotal * 2;
-        opacity += increment/scrollTotal;
-        updatePoints(rot, position, size, lFont, sFont, opacity, animationPairedPoints);
+
+        console.log("scrolling");
+        if(!scrollDirection){
+            rot += increment/scrollTotal*6
+            position -= increment/scrollTotal;
+            lFont += scrollTotal/increment-1;
+            sFont += increment/scrollTotal * 2;
+            opacity += increment/scrollTotal;
+            updatePoints(rot, position, size, lFont, sFont, opacity, animationPairedPoints);
+        } else if (scrollDirection < 0 && increment > 1){
+            increment--;
+
+            rot += increment/scrollTotal*6
+            position -= increment/scrollTotal;
+            lFont += scrollTotal/increment-1;
+            sFont += increment/scrollTotal * 2;
+            opacity += increment/scrollTotal;
+            updatePoints(rot, position, size, lFont, sFont, opacity, animationPairedPoints);
+        } else if (scrollDirection > 0 && increment < scrollTotal){
+            increment++;
+            console.log(increment);
+            rot += increment/scrollTotal*6
+            position -= increment/scrollTotal;
+            lFont += scrollTotal/increment-1;
+            sFont += increment/scrollTotal * 2;
+            opacity += increment/scrollTotal;
+            updatePoints(rot, position, size, lFont, sFont, opacity, animationPairedPoints);
+        }
     }
 
 //Determine animation starting points-------------------
@@ -294,50 +317,56 @@ export default function SphereElement(props) {
             let opacity = (1 + z) / 1.5;
 
             //variables to determine if div visibility should be none.
-            const potentialX = ((((paraMaxX / 2) - (navWidth / 2) - (endpointX - navWidth) + x * size)) * endModifier + (endpointX - navWidth)) + arr[i][0].offsetWidth;
-            const potentialY = (((45 + ((paraMaxY) / 2) - (endpointY)+ y * size)) * endModifier + (endpointY)) + arr[i][0].offsetHeight;
+            const potentialX = ((((paraMaxX / 2) - (navWidth / 2) - (endpointX - navWidth) + x * size)) * endModifier + (endpointX - navWidth)) + point.offsetWidth;
+            const potentialY = (((45 + ((paraMaxY) / 2) - (endpointY)+ y * size)) * endModifier + (endpointY)) + point.offsetHeight;
 
             const greetingPage = document.querySelector(".greetingPage");
-            //const position = arr[i][0].getBoundingClientRect();
-            if((potentialX + arr[i][0].offsetWidth) > greetingPage.offsetWidth){
-                arr[i][0].style.fontSize = scale + "em";
-                //arr[i][0].style.color = "red";
-                arr[i][0].style.visibility = "hidden";
-            } else if((potentialY + arr[i][0].offsetHeight) > greetingPage.offsetHeight){
+            //const position = point.getBoundingClientRect();
+            if((potentialX + point.offsetWidth) > greetingPage.offsetWidth - 10){
+                point.style.fontSize = scale + "em";
+                //point.style.color = "red";
+                point.style.visibility = "hidden";
+            } else if((potentialY + point.offsetHeight) > greetingPage.offsetHeight - 10){
                 //*******The idea here is to adjust font size so that the offsetHeight/Width dimensions change, but it isn't working quite right *******
-                arr[i][0].style.fontSize = scale + "em";
-                //arr[i][0].style.color = "red";
-                arr[i][0].style.visibility = "hidden";
+                point.style.fontSize = scale + "em";
+                //point.style.color = "red";
+                point.style.visibility = "hidden";
+            } else if((potentialX - point.offsetWidth) < 0){
+                //*******The idea here is to adjust font size so that the offsetHeight/Width dimensions change, but it isn't working quite right *******
+                point.style.fontSize = scale + "em";
+                //point.style.color = "red";
+                point.style.visibility = "hidden"; 
             } else { 
                 const style = "translate3d(" + ((((paraMaxX / 2) - (navWidth / 2) - (endpointX - navWidth) + x * size)) * endModifier + (endpointX - navWidth)) + "px, " + (((45 + ((paraMaxY) / 2) - (endpointY)+ y * size)) * endModifier + (endpointY)) + "px, " + scale + "px)";
-                arr[i][0].style.WebkitTransform = style;
-                arr[i][0].style.msTransform = style;
-                arr[i][0].style.transform = style;
-                arr[i][0].style.opacity = (Math.round(opacity * 100) + 100 * opc ) + "%";
-                arr[i][0].style.fontSize = scale + "em";
-                arr[i][0].style.visibility = "visible";
+                point.style.WebkitTransform = style;
+                point.style.msTransform = style;
+                point.style.transform = style;
+                point.style.opacity = (Math.round(opacity * 100) + 100 * opc ) + "%";
+                point.style.fontSize = scale + "em";
+                point.style.visibility = "visible";
             }
 
             // const style = "translate3d(" + ((((paraMaxX / 2) - (navWidth / 2) - (endpointX - navWidth) + x * size)) * endModifier + (endpointX - navWidth)) + "px, " + (((45 + ((paraMaxY) / 2) - (endpointY)+ y * size)) * endModifier + (endpointY)) + "px, " + scale + "px)";
-            //     arr[i][0].style.WebkitTransform = style;
-            //     arr[i][0].style.msTransform = style;
-            //     arr[i][0].style.transform = style;
-            //     arr[i][0].style.opacity = opacity;
-            //     arr[i][0].style.fontSize = scale + "em";
-            //     arr[i][0].style.color = "white";
+            //     point.style.WebkitTransform = style;
+            //     point.style.msTransform = style;
+            //     point.style.transform = style;
+            //     point.style.opacity = opacity;
+            //     point.style.fontSize = scale + "em";
+            //     point.style.color = "white";
         }
+        console.log("test")
     }
     useEffect(() => {
         //Determine animation destination coordinate
         setAnimationEndX();      
-        initAnimationPoints();
-        animationDirection(props.wheelDirection); 
+        initAnimationPoints(); 
+        handleWheel();
 
         //adjust animated desination on screen resize
         const onResize = () => {
             setAnimationEndX();
             initAnimationPoints();
-            animationDirection(props.wheelDirection);
+            handleWheel();
         }
         window.addEventListener('resize', onResize);
         
@@ -346,21 +375,29 @@ export default function SphereElement(props) {
         window.removeEventListener("resize", onResize);
         }
 
-    }, [props.wheelDirection]);
+    }, []);
 
     return(
         <div
-            id="greetingPage"
-            className="greetingPage"
+            id="sphereElement"
+            className="sphereElement"
+            onWheel={(e) => handleWheel(e)}
             //onWheel={(e) => animationDirection(e)}
             //likely need to use useState to capture wheel event on GreetingPage level and transfer data to this level via props
         >
-            {lettersArray.map((letter, i) => 
+            {lettersArray.map((letter, i) => {
+                return createElement(
+                    'div',
+                    { key: `piece${i}`, className: `implosion piece${i}` },
+                    letter
+                )
+            })}
+            {/* {lettersArray.map((letter, i) => 
             <Letter
                 key={`letter${i}`}
                 alpha={letter}
                 index={i}
-            />)}
+            />)} */}
         </div>
     )
 }

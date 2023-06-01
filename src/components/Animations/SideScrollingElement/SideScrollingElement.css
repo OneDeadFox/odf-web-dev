@@ -1,0 +1,13 @@
+.sideScrollingElement {
+    /* width: 86.5vw; */
+    /* max-width: 100%; */
+    height: 100vh;
+    max-height: 100vh;
+}
+
+.letter {
+    color: var(--dark-highlight-color);
+    position: absolute;
+    font-size: 2em;
+    visibility: hidden;
+}

@@ -7,7 +7,6 @@
     max-height: 100vh;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
 }
 
 .logoBox {
@@ -20,6 +19,7 @@
 .description {
     color: var(--dark-highlight-color);
     text-align: center;
+    margin-bottom: 20px;
 }
 
 .navbarTitle {
@@ -38,7 +38,7 @@
 .navLinks {
     display: flex;
     flex-direction: column;
-    margin-bottom: 80%;
+    margin-bottom: auto;
 }
 
 .contactLogos {
@@ -49,9 +49,4 @@
 
 .cLogo {
     max-height: 30px;
-}
-
-.implosion {
-    font-size: 2em;
-    position: absolute;
 }
