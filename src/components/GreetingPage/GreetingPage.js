@@ -1,13 +1,16 @@
 import {React, useState, useEffect, useRef, createElement} from "react";
 import "./GreetingPage.css"
 //import Letter from "../Letter/Letter"
+//Animation Components
 import SideScrollingElement from "../Animations/SideScrollingElement/SideScrollingElement"
 import SphereElement from "../Animations/SphereElement/SphereElement"
+//Page Components
+import PortfolioPage from "../PortfolioPage/PortfolioPage";
 
 export default function GreetingPage() {
     const greetingStr = "Here is some filler text so I will move on to other things. Here is some filler text so I will move on to other things. Here is some filler text so I will move on to other things. Here is some filler text so I will move on to other things. Here is some filler text so I will move on to other things. Here is some filler text so I will move on to other things. "
 
-    
+    const [scroll, setScroll] = useState(0);
 
 //Change the Greeting Heading--------------------------------------
     const fadeHeading = () => {
@@ -40,6 +43,18 @@ export default function GreetingPage() {
         }, 20)
     }
 
+    const handleWheel = (e) => {
+        const wheelDirection = (e) ? e.deltaY : false;
+        
+        if(wheelDirection < 0 && scroll >= 1){
+            setScroll(scroll - 1);
+            //console.log(scroll);
+        } else if (wheelDirection > 0 && scroll <= 20) {
+            setScroll(scroll + 1);
+            //console.log(scroll);
+        }
+    }
+
     useEffect(() => {
         //Init greeting header change
         setTimeout(function(){
@@ -66,7 +81,7 @@ export default function GreetingPage() {
         <div
             id="greetingPage"
             className="greetingPage"
-            //onWheel={(e) => handleWheel(e)}
+            onWheel={(e) => handleWheel(e)}
         >
                 <div className="main tagEmbellishment"> {`return (`} </div>
                 <div className="main tagEmbellishment"> {`<div>`} </div>
@@ -84,7 +99,11 @@ export default function GreetingPage() {
                 className="greetingBody"
             >
             </p>
-            <SideScrollingElement para={greetingStr}/>
+            <SideScrollingElement 
+                para={greetingStr}
+                scroll={scroll}
+            />
+            <PortfolioPage fromGreeting={true}/>
             <p
                 className="greetingFooter"
             >

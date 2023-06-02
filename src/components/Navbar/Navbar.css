@@ -50,3 +50,31 @@
 .cLogo {
     max-height: 30px;
 }
+
+/* Mobile Device Landscape */
+@media only screen and (max-width: 480px) {
+    #navbar {
+        min-width: 100vw;
+        max-width: 100vw;
+        max-height: 3em;
+    }
+
+    .navlinks {
+        display: none;
+    }
+}
+
+/* Mobile Device Portrait */
+@media only screen and (max-width: 480px) and (orientation: portrait) {
+    
+}
+
+/* Tablet */
+@media only screen and (min-width: 481px) and (max-width: 768px) {
+
+}
+
+/* Desktop */
+@media only screen and (min-width: 769px) {
+
+}

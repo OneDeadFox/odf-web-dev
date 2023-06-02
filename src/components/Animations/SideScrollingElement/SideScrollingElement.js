@@ -13,7 +13,7 @@ export default function SideScrollingElement(props){
     let paraMidY = 0;
     
     //wheel direction variables
-    const scrollTotal = 20;
+    const scrollTotal = 30;
         //starting value for wheel direction
     let increment = 5;
 
@@ -45,9 +45,6 @@ export default function SideScrollingElement(props){
 
             //give letter elemment an index key value for the coordinate system
             element.index = i;
-
-            //assign each letter a animation cohort
-            element.cohort = Math.floor(Math.random() * 15 + 5);
 
             //establish previous letter as element, if it's not the first letter
             let previousEl = null;
@@ -112,23 +109,36 @@ export default function SideScrollingElement(props){
         for (let i = 0; i < letters.length; i++) {
             const element = document.querySelector(`.sideScrollingLetter${i}`);
 
-            //A value based on a percentage of the letters final placement where the end result will be 1
-            const maxPercentage = (element.left / paraMaxX * element.cohort / dir) * (scrollTotal/dir - 1) * -1 + 1; 
-            
-            //Determine where each letter would be place and keep letters overlapping the navbar hidden 
-            const potentialX = (element.left / element.cohort * dir * maxPercentage);
+            //assign each letter a animation cohort
+            element.cohort = Math.floor((1 - (element.left / paraMaxX)) * 10 * (scrollTotal / 10) + 2);
 
+            //A value based on a percentage of the letters final placement where the end result will be 1
+            const maxPercentage = ((element.left / paraMaxX / element.cohort / dir) + 0.25) * (scrollTotal/dir - 1) * -1 + 1; 
+            
+
+            //Determine where each letter would be place and keep letters overlapping the navbar hidden 
+            const potentialX = (element.left / element.cohort * dir * maxPercentage) * (dir/scrollTotal);
             //set opacity and color values based on dir
-            const opacity = 100 //* dir / element.cohort;
-            const color = 255 * dir / element.cohort;
+            const opacity = 100 * dir / element.cohort * (dir/scrollTotal);
+
+            //from gray to white
+            const colorR = (255) * dir / element.cohort * (dir/scrollTotal);
+            const colorG = 25 + (255 - 25) * dir / element.cohort * (dir/scrollTotal);
+            const colorB = 45 + (255 - 45) * dir / element.cohort * (dir/scrollTotal);
+            //Color changing attempt
+            // const colorR = 50 + (1000 - 50) * dir / element.cohort * .2 * (dir/scrollTotal);
+            // const colorG = 75 + (1000 - 75) * dir / element.cohort * .21 * (dir/scrollTotal);
+            // const colorB = 95 + (1000 - 95) * dir / element.cohort * .25 * (dir/scrollTotal);
+            // const color = 255 * dir / element.cohort * (dir/scrollTotal);
 
             //Determine if letter should be displayed
+            //console.log(potentialX);
             if(potentialX > navWidth){
                 //element.style.top = 0 - element.offsetHeight + "px"
                 element.style.visibility = "visible"
                 element.style.opacity = opacity + 
                 "%";
-                element.style.color = `rgb(${color}, ${color}, ${color})`;
+                element.style.color = `rgb(${colorR}, ${colorG}, ${colorB})`;
             } else {
                 //element.style.top = element.top + "px"
                 element.style.visibility = "hidden"
@@ -140,19 +150,6 @@ export default function SideScrollingElement(props){
             } else {
                 element.style.left = potentialX + "px";
             }
-        }
-    }
-
-    //Handle scrolling events and initiate letter movement
-    const handleWheel = (e) => {
-        const scrollDirection = (e) ? e.deltaY : false;
-        
-        if(scrollDirection < 0 && increment >= 6){
-            increment--;
-            sideScroll(increment);
-        } else if (scrollDirection > 0 && increment < scrollTotal) {
-            increment++;
-            sideScroll(increment);
         }
     }
 
@@ -195,13 +192,13 @@ export default function SideScrollingElement(props){
         const navWidth = document.querySelector(".navbarDark").offsetWidth;
 
         setAnimationEndX();
-        sideScroll(5);
+        sideScroll(props.scroll + 7);
         page.style.minWidth = window.innerWidth - navWidth - conscrollCompensate().width + "px";
 
         //adjust animated desination on screen resize
         const onResize = () => {
             setAnimationEndX()
-            sideScroll(increment);
+            sideScroll(props.scroll + 7);
             page.style.minWidth = window.innerWidth - navWidth - conscrollCompensate().width + "px";
             page.style.maxHeight = window.innerHeight = conscrollCompensate().height;
         }
@@ -211,12 +208,12 @@ export default function SideScrollingElement(props){
         return () => {
         window.removeEventListener("resize", onResize);
         }
-    }, [])
+    }, [props.scroll]);
+
 
     return(
         <div
             className="sideScrollingElement"
-            onWheel={(e) => handleWheel(e)}
         >
             {letters.map((letter, i) => {
                 return createElement(
