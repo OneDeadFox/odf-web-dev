@@ -1,7 +1,7 @@
 .linkButton {
     color: var(--dark-text-color);
     font-size: 1.5em;
-    min-height: 2em;
+    height: 2em;
     line-height: 2em;
     text-decoration: none;
     vertical-align: middle;
@@ -30,4 +30,33 @@
 
 .left:hover {
     padding-left: 2em;
+}
+
+/* Mobile Device Landscape */
+@media only screen and (max-width: 480px) {
+    .linkButton {
+        width: 4.7em;
+        max-width: 4.7em;
+        padding-left: .5em;
+        font-size: 1em;
+        background-color: var(--dark-base-color);
+        position: absolute;
+        top: calc(var(--nav-height) - 2em);
+        left: 0;
+    }
+}
+
+/* Mobile Device Portrait */
+@media only screen and (max-width: 480px) and (orientation: portrait) {
+    
+}
+
+/* Tablet */
+@media only screen and (min-width: 481px) and (max-width: 768px) {
+
+}
+
+/* Desktop */
+@media only screen and (min-width: 769px) {
+
 }
