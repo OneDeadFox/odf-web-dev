@@ -7,7 +7,7 @@ import SphereElement from "../Animations/SphereElement/SphereElement"
 //Page Components
 import PortfolioPage from "../PortfolioPage/PortfolioPage";
 
-export default function GreetingPage() {
+export default function GreetingPage(props) {
     const greetingStr = "Here is some filler text so I will move on to other things. Here is some filler text so I will move on to other things. Here is some filler text so I will move on to other things. Here is some filler text so I will move on to other things. Here is some filler text so I will move on to other things. Here is some filler text so I will move on to other things. "
 
     const [scroll, setScroll] = useState(0);
@@ -103,7 +103,10 @@ export default function GreetingPage() {
                 para={greetingStr}
                 scroll={scroll}
             />
-            <PortfolioPage fromGreeting={true}/>
+            <PortfolioPage 
+                fromGreeting={true}
+                screenType={props.screenType}
+            />
             <p
                 className="greetingFooter"
             >

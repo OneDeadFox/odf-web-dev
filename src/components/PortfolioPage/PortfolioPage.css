@@ -1,0 +1,9 @@
+.portfolioPage {
+    width: var(--page-width);
+    max-width: var(--page-width);
+    height: 100vh;
+    position: absolute;
+    background-color: red;
+    overflow: hidden;
+}
+

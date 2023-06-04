@@ -25,7 +25,7 @@ export default function App() {
   }, [])
 
   return (
-    <BrowserRouter basename="https://onedeadfox.github.io/odf-web-dev">
+    <BrowserRouter>
       <section
         className="background"
       >
