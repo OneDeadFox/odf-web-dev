@@ -1,8 +1,8 @@
 #navbar {
     background-color: var(--dark-base-color);
     color: var(--dark-text-color);
-    width: 13.5vw;
-    max-width: 13.5vw;
+    width: 170px;
+    max-width: 170px;
     min-width: var(--nav-width);
     min-height: 100vh;
     max-height: 100vh;

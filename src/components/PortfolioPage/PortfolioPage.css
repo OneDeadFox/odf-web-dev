@@ -1,5 +1,5 @@
 .portfolioPage {
-    width: var(--page-width);
+    width: calc(100vw - var(--nav-width));
     max-width: var(--page-width);
     height: 100vh;
     position: absolute;

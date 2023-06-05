@@ -1,6 +1,5 @@
 .sphereElement {
-    width: var(--page-width);
-    max-width: var(--page-width);
+    width: calc(100vw - var(--nav-width));
     max-width: 100%;
     height: 100vh;
     max-height: 100vh;

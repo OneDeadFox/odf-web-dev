@@ -15,23 +15,34 @@ export default function PortfolioPage(props) {
         for (let i = 0; i < exampleImages.length; i++) {
             const dropInDiagonal = document.querySelector(`.dropIn${i}`);
             const x1 = document.querySelector("#navbar").offsetWidth;
+            console.log(x1)
             const page = document.querySelector(".portfolioPage");
             const x2 = page.offsetWidth;
             const y2 = page.offsetHeight;
             const angle = Math.atan2(y2, (x2 - x1));
+            const rightAngleMod = 1.5708;
+            const opAngle = (rightAngleMod - angle);
+            const opHypotenuse = y2 / Math.sin(opAngle);
             const dropInWidth = Math.round(Math.sqrt((Math.pow(x2, 2) + Math.pow(y2, 2))));
+            const heightModifier = 6
+            const crossAngle = Math.abs(opAngle - angle);
+            const dropInHeightLandscape = x2 * Math.cos(crossAngle) / (exampleImages.length);
+            // const dropInHeightLandscape = x2 / Math.sin(opAngle) / (exampleImages.length);
+            const dropInHeightPortrait = y2 / 5.5 /Math.sin(opAngle) / 2;
+            // const dropInHeight = opHypotenuse / exampleImages.length;
 
             //set test background colors
             dropInDiagonal.style.backgroundColor = `rgb(${(i+1)*42}, ${(i+1)*63}, ${(i+1)*80})`;
             
-            //transform the diagonal sections
-            const newDimensions = getDropInDimensions(angle, dropInWidth, y2/exampleImages.length);
-                console.log(newDimensions);
-
             //set drop in height and width
-            dropInDiagonal.style.width = dropInWidth + "px";
-            dropInDiagonal.style.height = newDimensions.rotatedHeight/2 + "px";
+            dropInDiagonal.style.width = dropInWidth * 2 + "px";
+            if(x2 > y2){
+                dropInDiagonal.style.height = 1 + "px";
+            } else {
+                dropInDiagonal.style.height = dropInHeightPortrait + "px";
+            }
 
+            //set drop in angle
             dropInDiagonal.style.transform = `
                 translate(${x2/2 - dropInDiagonal.offsetWidth/2}px, ${y2/2 - dropInDiagonal.offsetHeight/2}px)
                 rotate(-${angle}rad)
@@ -39,8 +50,19 @@ export default function PortfolioPage(props) {
             
             //set drop in coordinates
             const rect = dropInDiagonal.getBoundingClientRect();
-            dropInDiagonal.style.left =  -1 * rect.right/2 - rect.left/2 + x1 + "px";
-            dropInDiagonal.style.top = -1 * rect.bottom/2 - rect.top/2 + "px";
+            //set Placement based on drop in height
+            if(x2 > y2) {
+                const placementRise = Math.sin(opAngle) * (dropInHeightLandscape);
+                const placementRun = Math.cos(opAngle) * (dropInHeightLandscape);
+                dropInDiagonal.style.left =  Math.round((-rect.right/2 - rect.left/2) +  (placementRun/2) + (placementRun * i) + x1) + "px";
+                dropInDiagonal.style.top = Math.round((-rect.bottom/2 - rect.top/2) + (placementRise/2) + (placementRise * i)) + "px";
+            } else {
+                const placementRise = Math.sin(opAngle) * (dropInHeightPortrait);
+                const placementRun = Math.cos(opAngle) * (dropInHeightPortrait);
+
+                dropInDiagonal.style.left =  Math.round((-rect.right/2 - rect.left/2) +  (placementRun/2) + (placementRun * i) + x1) + "px";
+                dropInDiagonal.style.top = Math.round((-rect.bottom/2 - rect.top/2) + (placementRise/2) + (placementRise * i)) + "px";
+            }
             
             //set container boundaries
             dropInContainers[i].style.width = x2 + "px"
