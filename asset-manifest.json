@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/odf-web-dev/static/css/main.cfdaad7e.css",
-    "main.js": "/odf-web-dev/static/js/main.59237b97.js",
+    "main.css": "/odf-web-dev/static/css/main.3c086d18.css",
+    "main.js": "/odf-web-dev/static/js/main.d48bfb16.js",
     "static/media/construction.png": "/odf-web-dev/static/media/construction.20d741790f647e1a7a43.png",
     "static/media/fox-head-logo-button-transparent.png": "/odf-web-dev/static/media/fox-head-logo-button-transparent.a1a6a0f04ee770832a8b.png",
     "static/media/fox-head-logo.png": "/odf-web-dev/static/media/fox-head-logo.a1a6a0f04ee770832a8b.png",
@@ -12,11 +12,11 @@
     "static/media/github-logo.png": "/odf-web-dev/static/media/github-logo.a75e0e948ce297f6de45.png",
     "static/media/linked-in-logo.png": "/odf-web-dev/static/media/linked-in-logo.ac65b3dbc643e504bd6d.png",
     "index.html": "/odf-web-dev/index.html",
-    "main.cfdaad7e.css.map": "/odf-web-dev/static/css/main.cfdaad7e.css.map",
-    "main.59237b97.js.map": "/odf-web-dev/static/js/main.59237b97.js.map"
+    "main.3c086d18.css.map": "/odf-web-dev/static/css/main.3c086d18.css.map",
+    "main.d48bfb16.js.map": "/odf-web-dev/static/js/main.d48bfb16.js.map"
   },
   "entrypoints": [
-    "static/css/main.cfdaad7e.css",
-    "static/js/main.59237b97.js"
+    "static/css/main.3c086d18.css",
+    "static/js/main.d48bfb16.js"
   ]
 }
