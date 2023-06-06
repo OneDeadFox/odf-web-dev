@@ -11,24 +11,25 @@ export default function PortfolioPage(props) {
 
     const setDropIns = () => {
         const dropInContainers = Array.from(document.querySelectorAll(".dropInContainer"));
+        const page = document.querySelector(".portfolioPage");
+        const pageBounding = page.getBoundingClientRect();
+        const navWidth = document.querySelector("#navbar").offsetWidth;
 
         for (let i = 0; i < exampleImages.length; i++) {
             const dropInDiagonal = document.querySelector(`.dropIn${i}`);
-            const x1 = document.querySelector("#navbar").offsetWidth;
-            console.log(x1)
-            const page = document.querySelector(".portfolioPage");
-            const x2 = page.offsetWidth;
-            const y2 = page.offsetHeight;
-            const angle = Math.atan2(y2, (x2 - x1));
+            //set base Variables
+                //toFixed sets the number of decimal places
+            const containerWidth = pageBounding.width.toFixed(1);
+            const containerHeight = pageBounding.height.toFixed(1);
+            const angle = Math.atan2(containerHeight, (containerWidth));
             const rightAngleMod = 1.5708;
             const opAngle = (rightAngleMod - angle);
-            const opHypotenuse = y2 / Math.sin(opAngle);
-            const dropInWidth = Math.round(Math.sqrt((Math.pow(x2, 2) + Math.pow(y2, 2))));
-            const heightModifier = 6
+            
+            const dropInWidth = Math.round(Math.sqrt((Math.pow(containerWidth, 2) + Math.pow(containerHeight, 2))));
             const crossAngle = Math.abs(opAngle - angle);
-            const dropInHeightLandscape = x2 * Math.cos(crossAngle) / (exampleImages.length);
-            // const dropInHeightLandscape = x2 / Math.sin(opAngle) / (exampleImages.length);
-            const dropInHeightPortrait = y2 / 5.5 /Math.sin(opAngle) / 2;
+            const dropInHeightLandscape = containerWidth * Math.cos(crossAngle) / (exampleImages.length);
+            // const dropInHeightLandscape = containerWidth / Math.sin(opAngle) / (exampleImages.length);
+            const dropInHeightPortrait = containerHeight / 5.5 /Math.sin(opAngle) / 2;
             // const dropInHeight = opHypotenuse / exampleImages.length;
 
             //set test background colors
@@ -36,37 +37,37 @@ export default function PortfolioPage(props) {
             
             //set drop in height and width
             dropInDiagonal.style.width = dropInWidth * 2 + "px";
-            if(x2 > y2){
-                dropInDiagonal.style.height = 1 + "px";
+            if(containerWidth > containerHeight){
+                dropInDiagonal.style.height = dropInHeightLandscape + "px";
             } else {
                 dropInDiagonal.style.height = dropInHeightPortrait + "px";
             }
 
             //set drop in angle
             dropInDiagonal.style.transform = `
-                translate(${x2/2 - dropInDiagonal.offsetWidth/2}px, ${y2/2 - dropInDiagonal.offsetHeight/2}px)
+                translate(${containerWidth/2 - dropInDiagonal.offsetWidth/2}px, ${containerHeight/2 - dropInDiagonal.offsetHeight/2}px)
                 rotate(-${angle}rad)
             `;
             
             //set drop in coordinates
             const rect = dropInDiagonal.getBoundingClientRect();
             //set Placement based on drop in height
-            if(x2 > y2) {
+            if(containerWidth > containerHeight) {
                 const placementRise = Math.sin(opAngle) * (dropInHeightLandscape);
                 const placementRun = Math.cos(opAngle) * (dropInHeightLandscape);
-                dropInDiagonal.style.left =  Math.round((-rect.right/2 - rect.left/2) +  (placementRun/2) + (placementRun * i) + x1) + "px";
+                dropInDiagonal.style.left =  Math.round((-rect.right/2 - rect.left/2) +  (placementRun/2) + (placementRun * i) + navWidth) + "px";
                 dropInDiagonal.style.top = Math.round((-rect.bottom/2 - rect.top/2) + (placementRise/2) + (placementRise * i)) + "px";
             } else {
                 const placementRise = Math.sin(opAngle) * (dropInHeightPortrait);
                 const placementRun = Math.cos(opAngle) * (dropInHeightPortrait);
 
-                dropInDiagonal.style.left =  Math.round((-rect.right/2 - rect.left/2) +  (placementRun/2) + (placementRun * i) + x1) + "px";
+                dropInDiagonal.style.left =  Math.round((-rect.right/2 - rect.left/2) +  (placementRun/2) + (placementRun * i) + navWidth) + "px";
                 dropInDiagonal.style.top = Math.round((-rect.bottom/2 - rect.top/2) + (placementRise/2) + (placementRise * i)) + "px";
             }
             
             //set container boundaries
-            dropInContainers[i].style.width = x2 + "px"
-            dropInContainers[i].style.height = y2 + "px"
+            dropInContainers[i].style.width = containerWidth + "px"
+            dropInContainers[i].style.height = containerHeight + "px"
 
 
         }
@@ -77,19 +78,19 @@ export default function PortfolioPage(props) {
             sin = Math.sin(angle),
             cos = Math.cos(angle);
 
-        const x1 = cos* w,
+        const navWidth = cos* w,
             y1 = sin * w;
 
-        const x2 = -sin * h,
-            y2 = cos * h;
+        const containerWidth = -sin * h,
+            containerHeight = cos * h;
 
         const x3 = cos * w - sin * h,
             y3 = sin * w + cos * h;
 
-        const minX = Math.min(0, x1, x2, x3),
-            maxX = Math.max(0, x1, x2, x3),
-            minY = Math.min(0, y1, y2, y3),
-            maxY = Math.max(0, y1, y2, y3);
+        const minX = Math.min(0, navWidth, containerWidth, x3),
+            maxX = Math.max(0, navWidth, containerWidth, x3),
+            minY = Math.min(0, y1, containerHeight, y3),
+            maxY = Math.max(0, y1, containerHeight, y3);
 
         return({
             rotatedWidth: maxX-minX,

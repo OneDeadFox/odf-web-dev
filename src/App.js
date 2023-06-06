@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { HashRouter, Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar/Navbar"
 import LandingPage from "./components/LandingPage/LandingPage";
 import PortfolioPage from "./components/PortfolioPage/PortfolioPage"
@@ -25,7 +25,7 @@ export default function App() {
   }, [])
 
   return (
-    <BrowserRouter>
+    <HashRouter>
       <section
         className="background"
       >
@@ -57,6 +57,6 @@ export default function App() {
         </Route>
       </Routes>
       </section>
-    </BrowserRouter>
+    </HashRouter>
   );
 }
