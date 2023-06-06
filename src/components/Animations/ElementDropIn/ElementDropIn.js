@@ -10,12 +10,6 @@ export default function ElementDropIn(props) {
             <div
                 className={`elementDropIn dropIn${props.index}`}
             >
-                <div
-                    className="centerW"
-                ></div>
-                <div
-                    className="centerY"
-                ></div>
             </div>
         </div>
     )

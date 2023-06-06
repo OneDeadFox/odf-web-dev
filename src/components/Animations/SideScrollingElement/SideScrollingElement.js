@@ -104,7 +104,7 @@ export default function SideScrollingElement(props){
 
     const sideScroll = (dir) => {
         const navWidth = document.querySelector(".navbarDark").offsetWidth;
-
+        const container = document.querySelector(".greetingPage")
         //itterate over all letters and update thier location based on passed scroll wheel value (dir)
         for (let i = 0; i < letters.length; i++) {
             const element = document.querySelector(`.sideScrollingLetter${i}`);
@@ -133,7 +133,7 @@ export default function SideScrollingElement(props){
 
             //Determine if letter should be displayed
             //console.log(potentialX);
-            if(potentialX > navWidth){
+            if(potentialX > navWidth && element.top + element.offsetHeight < container.offsetHeight){
                 //element.style.top = 0 - element.offsetHeight + "px"
                 element.style.visibility = "visible"
                 element.style.opacity = opacity + 

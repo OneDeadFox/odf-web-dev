@@ -1,24 +1,14 @@
 .elementDropIn {
     width: 100px;
     height: 100px;
-    position: absolute;
     display: flex;
-    justify-content: center;
-    align-items: center;
+    position: absolute;
 }
 
 .dropInContainer {
-
     width: 1px;
     height: 1px;
     margin: 0;
     position: absolute;
     /* overflow: hidden; */
-}
-
-.centerW {
-    background-color: yellow;
-    width: 1px;
-    height: 1px;
-    z-index: 10;
 }

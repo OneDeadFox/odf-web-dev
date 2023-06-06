@@ -7,7 +7,8 @@ import potteryEx from "../../assets/pottery.jpg"
 import "./PortfolioPage.css"
 
 export default function PortfolioPage(props) {
-    const exampleImages = [constructionEx, gameDevEx, potteryEx];
+    const exampleImages = [constructionEx, gameDevEx, potteryEx, "test", potteryEx, "test"];
+    let once = false;
 
     const setDropIns = () => {
         const dropInContainers = Array.from(document.querySelectorAll(".dropInContainer"));
@@ -25,15 +26,15 @@ export default function PortfolioPage(props) {
             const rightAngleMod = 1.5708;
             const opAngle = (rightAngleMod - angle);
             
+            //drop in sizing variables
             const dropInWidth = Math.round(Math.sqrt((Math.pow(containerWidth, 2) + Math.pow(containerHeight, 2))));
-            const crossAngle = Math.abs(opAngle - angle);
-            const dropInHeightLandscape = containerWidth * Math.cos(crossAngle) / (exampleImages.length);
-            // const dropInHeightLandscape = containerWidth / Math.sin(opAngle) / (exampleImages.length);
-            const dropInHeightPortrait = containerHeight / 5.5 /Math.sin(opAngle) / 2;
-            // const dropInHeight = opHypotenuse / exampleImages.length;
+            
+            const dropInHeightLandscape = (containerWidth * Math.sin(angle) / (exampleImages.length/2));
+            
+            const dropInHeightPortrait = containerHeight * Math.cos(angle) / (exampleImages.length/2);
 
             //set test background colors
-            dropInDiagonal.style.backgroundColor = `rgb(${(i+1)*42}, ${(i+1)*63}, ${(i+1)*80})`;
+            dropInDiagonal.style.backgroundColor = `rgb(${(i+1)*42 - (exampleImages.length/(i+1)*10)}, ${(i+1)*63 - (exampleImages.length/(i+1)*10)}, ${(i+1)*80 - (exampleImages.length/(i+1)*10)})`;
             
             //set drop in height and width
             dropInDiagonal.style.width = dropInWidth * 2 + "px";
@@ -50,26 +51,36 @@ export default function PortfolioPage(props) {
             `;
             
             //set drop in coordinates
+                //might not be necessary to prevent rerender for deployed
+                //just annoying that the bounding client gets rerendered with every change during build
             const rect = dropInDiagonal.getBoundingClientRect();
+            if(once === false) {
+                dropInDiagonal.right = rect.right;
+                dropInDiagonal.left = rect.left;
+                dropInDiagonal.top = rect.top;
+                dropInDiagonal.bottom = rect.bottom;
+            }
             //set Placement based on drop in height
+                //Landscape
             if(containerWidth > containerHeight) {
                 const placementRise = Math.sin(opAngle) * (dropInHeightLandscape);
                 const placementRun = Math.cos(opAngle) * (dropInHeightLandscape);
-                dropInDiagonal.style.left =  Math.round((-rect.right/2 - rect.left/2) +  (placementRun/2) + (placementRun * i) + navWidth) + "px";
-                dropInDiagonal.style.top = Math.round((-rect.bottom/2 - rect.top/2) + (placementRise/2) + (placementRise * i)) + "px";
+                dropInDiagonal.style.left =  ((-dropInDiagonal.right/2 - dropInDiagonal.left/2) +  (placementRun/2) + (placementRun * i) + navWidth) + "px";
+                dropInDiagonal.style.top = ((-dropInDiagonal.bottom/2 - dropInDiagonal.top/2) + (placementRise/2) + (placementRise * i)) + "px";
+                    //Portait
             } else {
                 const placementRise = Math.sin(opAngle) * (dropInHeightPortrait);
                 const placementRun = Math.cos(opAngle) * (dropInHeightPortrait);
 
-                dropInDiagonal.style.left =  Math.round((-rect.right/2 - rect.left/2) +  (placementRun/2) + (placementRun * i) + navWidth) + "px";
-                dropInDiagonal.style.top = Math.round((-rect.bottom/2 - rect.top/2) + (placementRise/2) + (placementRise * i)) + "px";
+                dropInDiagonal.style.left =  Math.round((-dropInDiagonal.right/2 - dropInDiagonal.left/2) +  (placementRun/2) + (placementRun * i) + navWidth) + "px";
+                dropInDiagonal.style.top = Math.round((-dropInDiagonal.bottom/2 - dropInDiagonal.top/2) + (placementRise/2) + (placementRise * i)) + "px";
             }
+
+            //set droping boarders
             
             //set container boundaries
             dropInContainers[i].style.width = containerWidth + "px"
             dropInContainers[i].style.height = containerHeight + "px"
-
-
         }
     }
 
