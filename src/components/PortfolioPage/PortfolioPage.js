@@ -7,8 +7,12 @@ import potteryEx from "../../assets/pottery.jpg"
 import "./PortfolioPage.css"
 
 export default function PortfolioPage(props) {
-    const exampleImages = [constructionEx, gameDevEx, potteryEx, "test", potteryEx, "test"];
+    const exampleImages = [constructionEx, gameDevEx, potteryEx, potteryEx, gameDevEx, constructionEx];
+    const polygons = []
+
     let once = false;
+    let active = true;
+    let coordinates;
 
     const setDropIns = () => {
         const dropInContainers = Array.from(document.querySelectorAll(".dropInContainer"));
@@ -77,6 +81,14 @@ export default function PortfolioPage(props) {
             }
 
             //set droping boarders
+            // if(i === 0){
+            //     dropInDiagonal.style.borderBottom = "5px solid #FFFFFF";
+            // } else if (i < exampleImages.length) {
+            //     dropInDiagonal.style.borderBottom = "5px solid #FFFFFF";
+            //     dropInDiagonal.style.borderTop = "5px solid #FFFFFF";
+            // } else {
+            //     dropInDiagonal.style.borderTop = "5px solid #FFFFFF";
+            // }
             
             //set container boundaries
             dropInContainers[i].style.width = containerWidth + "px"
@@ -84,28 +96,40 @@ export default function PortfolioPage(props) {
         }
     }
 
-    const getDropInDimensions = (ang, w, h) => {
-        const angle = ang * 180 * Math.PI,
-            sin = Math.sin(angle),
-            cos = Math.cos(angle);
+    const getPolyCoor = (landscagitpe, height, angle, i) => {
+        let polyW1, polyH1, polyW2, polyH2;
+        //set polygon coordinates for PNPOLY algorithm
+        if(polyW1 < height){
+            polyW1 = i * (height / )
+        } else {
 
-        const navWidth = cos* w,
-            y1 = sin * w;
+        }
 
-        const containerWidth = -sin * h,
-            containerHeight = cos * h;
+        const polygon = [
+            [],
+            [],
+            [],
+            []
+        ]
+    }
 
-        const x3 = cos * w - sin * h,
-            y3 = sin * w + cos * h;
+    const growDropIns = (coor) => {
+        const dropInContainers = Array.from(document.querySelectorAll(".dropInContainer"));
 
-        const minX = Math.min(0, navWidth, containerWidth, x3),
-            maxX = Math.max(0, navWidth, containerWidth, x3),
-            minY = Math.min(0, y1, containerHeight, y3),
-            maxY = Math.max(0, y1, containerHeight, y3);
+        for (let i = 0; i < exampleImages.length; i++) {
+            
+        }
+    }
 
-        return({
-            rotatedWidth: maxX-minX,
-            rotatedHeight: maxY-minY
+    if(active === true) {
+        window.addEventListener("mousemove", function(e) {
+            let mouseX = e.clientX;
+            let mouseY = e.clientY;
+            coordinates = {
+                x: mouseX,
+                y: mouseY
+            };
+            console.log()
         });
     }
 
@@ -125,7 +149,8 @@ export default function PortfolioPage(props) {
                         image={image}
                     />
                 ) :
-                <h1>Portfolio</h1>
+                <h1
+                >Portfolio</h1>
             }
         </div>
     )
